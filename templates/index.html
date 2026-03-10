@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart Policy Recommendation</title>
+</head>
+<body>
+    <h2>Smart Policy Recommendation Engine</h2>
+    <form id="policyForm">
+        Age: <input type="number" id="age" value="25"><br>
+        Vehicle: <input type="text" id="vehicle" value="sedan"><br>
+        Location: <input type="text" id="location" value="urban"><br>
+        Claims: <input type="number" id="claims" value="0"><br>
+        <button type="submit">Get Recommendation</button>
+    </form>
+    <p id="result"></p>
+
+    <script>
+const form = document.getElementById('policyForm');
+form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const age = document.getElementById('age').value;
+    const vehicle = document.getElementById('vehicle').value;
+    const location = document.getElementById('location').value;
+    const claims = document.getElementById('claims').value;
+
+    const resultEl = document.getElementById('result');
+    resultEl.innerHTML = "Loading...";
+
+    try {
+        const response = await fetch(`http://127.0.0.1:8000/recommend?age=${age}&vehicle=${vehicle}&location=${location}&claims=${claims}`);
+        const data = await response.json();
+
+        resultEl.innerHTML = `
+            <div style="border:1px solid #4CAF50; padding:10px; margin-top:10px; border-radius:5px; width: fit-content;">
+                <p><strong>Recommended Policy:</strong> ${data.recommended_policy}</p>
+                <p><strong>Estimated Premium:</strong> $${data.estimated_premium}</p>
+            </div>
+        `;
+    } catch (err) {
+        resultEl.innerHTML = `<p style="color:red;">Error: Could not fetch recommendation</p>`;
+        console.error(err);
+    }
+});
+</script>
+</body>
+</html>

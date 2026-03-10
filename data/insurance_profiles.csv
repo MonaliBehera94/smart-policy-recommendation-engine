@@ -1,0 +1,6 @@
+age,vehicle_type,location,claim_history,recommended_policy
+22,sports,urban,1,full_coverage
+35,sedan,urban,0,standard_coverage
+50,suv,rural,0,liability_only
+28,sports,urban,2,high_risk_policy
+40,sedan,rural,0,standard_coverage
